@@ -16,7 +16,11 @@ int main()
     {
         printf("\n");
         for(int j=0; j < SIZE; j++)
-            printf("%d ", grid[i][j]);
+            if (grid[i][j] == 0)
+            printf(". ");
+        else
+            printf("* ");
+
     }
 
     printf("\nLights Out Game\n");
