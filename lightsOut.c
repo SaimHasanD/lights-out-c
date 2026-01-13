@@ -4,6 +4,8 @@
 
 #define SIZE 5
 
+int moves = 0;
+
 void printGrid(int grid[SIZE][SIZE])
 {
     printf("    ");
@@ -46,17 +48,18 @@ void toggle(int grid[SIZE][SIZE], int row, int col)
     // right
     if (col < SIZE - 1)
         grid[row][col + 1] = 1 - grid[row][col + 1];
+
+    moves ++;
 }
 
 void randomizeGrid(int grid[SIZE][SIZE],int difficulty)
 {
-    srand(time(NULL));
-
     for (int k = 0; k < 2 * difficulty; k++)
     {
         int row = rand() % SIZE;
         int col = rand() % SIZE;
         toggle(grid, row, col);
+        moves = 0;
     }
 }
 
@@ -79,6 +82,12 @@ int main()
     int grid[SIZE][SIZE];
     int row, col, difficulty;
 
+
+    // initialize grid
+    for (int i = 0; i < SIZE; i++)
+        for (int j = 0; j < SIZE; j++)
+            grid[i][j] = 0;
+
     // Select difficulty
     printf("\nSelect Difficulty Level:\n");
     printf("1. Easy\n");
@@ -87,11 +96,11 @@ int main()
     printf("Enter choice (1-3): ");
     scanf("%d", &difficulty);
 
+    // default to medium
+    if (difficulty < 1 || difficulty > 3)
+    difficulty = 2;
 
-    // initialize grid
-    for (int i = 0; i < SIZE; i++)
-        for (int j = 0; j < SIZE; j++)
-            grid[i][j] = 0;
+    srand(time(NULL));
 
     // create easy puzzle
     randomizeGrid(grid, difficulty);
@@ -120,7 +129,7 @@ int main()
         if (checkWin(grid))
         {
             printGrid(grid);
-            printf("\nYou win!\n");
+            printf("\n\nYou win in %d moves!\n", moves);
             break;
         }
     }
