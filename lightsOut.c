@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define SIZE 5
 
@@ -13,6 +15,32 @@ int main()
         for(int j=0; j < SIZE; j++)
             grid[i][j] = 0;
     }
+
+    srand(time(NULL));
+
+    for (int k = 0; k < 5; k ++)
+    {
+        row = rand() % SIZE;
+        col = rand() % SIZE;
+
+        grid[row][col] = 1 - grid[row][col];
+        // up
+        if (row > 0)
+        grid[row - 1][col] = 1 - grid[row - 1][col];
+
+        // down
+        if (row < SIZE - 1)
+        grid[row + 1][col] = 1 - grid[row + 1][col];
+
+        // left
+        if (col > 0)
+        grid[row][col - 1] = 1 - grid[row][col - 1];
+
+        // right
+        if (col < SIZE - 1)
+        grid[row][col + 1] = 1 - grid[row][col + 1];
+    }
+
 
     while(1)
         {
